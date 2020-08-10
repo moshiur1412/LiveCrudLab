@@ -26,7 +26,7 @@ class PersonalInfoRequest extends FormRequest
         return [
             'name' => 'required|max:200',
             'country' => 'required',
-            'city' => 'required',
+            'city' => 'required_with:country', 
             'skills' => 'required',
             'birthday' => 'required',
             'resume' => 'required|mimes:doc,docx,pdf|max:2048|unique:personal_infos,resume'
