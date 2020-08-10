@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function(){
+	return redirect()->route('crud.index');
 });
+
+Route::resource('crud','CrudController');
+
+Route::get('citycall/{id}', 'CrudController@cityName');
