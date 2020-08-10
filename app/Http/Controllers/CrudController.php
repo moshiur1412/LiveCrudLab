@@ -57,7 +57,7 @@ class CrudController extends Controller
     public function store(PersonalInfoRequest $request)
     {
         \Log::info("Req=CrudController@store Called");
-       
+
         $personal_info = new PersonalInfo;
         $personal_info->name = $request->name;
         $personal_info->country = $request->country;
@@ -92,7 +92,6 @@ class CrudController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -106,23 +105,25 @@ class CrudController extends Controller
         $skills = array_flip($skills);
 
         $countries = Country::all();
-        $cities = City::where('name', $personal_info->city)->get();
-        foreach ($cities as $key => $city) {
-            $city_data = City::where('country_id', $city->country_id)->get();
+        $city_data = City::where('name', $personal_info->city)->get();
+        foreach ($city_data as $city) {
+            $cities = City::where('country_id', $city->country_id)->get();
         }
-// dd($city_data);
-        return view('crud.edit', compact('personal_info', 'skills', 'countries', 'city_data'));
+
+        return view('crud.edit', compact('personal_info', 'skills', 'countries', 'cities'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(PersonalInfoRequest $request, $id)
     {
+
+        \Log::info("Req=CrudController@updated Called");
+
         $skills = implode(',', $request->skills);
         $personal_info = PersonalInfo::findOrFail($id);
         $personal_info->name = $request->name;
@@ -132,24 +133,22 @@ class CrudController extends Controller
         $personal_info->birthday = $request->birthday;
 
         $path = base_path() . '/public/uploads/'.$personal_info->resume;
-    
+
         if (file_exists($path)) {
-           unlink($path);
-       }
-       $resume = $request->file('resume')->getClientOriginalName();
-       $resume_name = $id."_".$resume;
-       $destination = base_path() . '/public/uploads';
-       $request->file('resume')->move($destination, $resume_name);
+         unlink($path);
+     }
+     $resume = $request->file('resume')->getClientOriginalName();
+     $resume_name = $id."_".$resume;
+     $destination = base_path() . '/public/uploads';
+     $request->file('resume')->move($destination, $resume_name);
 
+     $personal_info->resume = $resume_name;
 
-       $personal_info->resume = $resume_name;
+     $personal_info->save();
 
-       $personal_info->save();
+     return redirect()->route('crud.index')->with('success', 'Your data updated successfully');
 
-       return redirect()->route('crud.index');
-
-       \Log::info("Req=CrudController@updated Called");
-   }
+ }
 
     /**
      * Remove the specified resource from storage.
@@ -159,20 +158,19 @@ class CrudController extends Controller
      */
     public function destroy($id)
     {
-     $personal_info = PersonalInfo::findOrFail($id);
+       \Log::info("Req=CrudController@destroy Called");
+       
+       $personal_info = PersonalInfo::findOrFail($id);
 
-     $path = base_path() . '/public/uploads/'.$personal_info->resume;
-        // dd($path);
+       $path = base_path() . '/public/uploads/'.$personal_info->resume;
 
-     if (file_exists($path)) {
-       unlink($path);
+       if (file_exists($path)) { unlink($path); }
+
+       $personal_info->delete();
+
+       return redirect()->route('crud.index')->with('success', 'Your data deleted successfully');
+
    }
 
-   $personal_info->delete();
 
-
-   return redirect()->route('crud.index');
-
-   \Log::info("Req=CrudController@destroy Called");
-}
 }

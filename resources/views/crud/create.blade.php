@@ -99,7 +99,7 @@
               <label class="form-check-label" for="inlineCheckbox2">PHP</label>
           </div>
           <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="SQ" name="skills[]" @if(is_array(old('skills')) && in_array('SQL', old('skills'))) checked @endif>
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="SQL" name="skills[]" @if(is_array(old('skills')) && in_array('SQL', old('skills'))) checked @endif>
               <label class="form-check-label" for="inlineCheckbox2">SQL</label>
           </div>
 
