@@ -134,23 +134,36 @@ class CrudController extends Controller
         $personal_info->skills = $skills;
         $personal_info->birthday = $request->birthday;
 
-        $path = base_path() . '/public/uploads/'.$personal_info->resume;
+        $file = $request->file('resume');
+        if(!empty($file)){
 
-        if (file_exists($path)) {
-           unlink($path);
-       }
-       $ext = $request->file('resume')->getClientOriginalExtension();
-       $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
-       $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
-       $personal_info->resume = $resume_name;
+            $request->validate([
+                'resume' => 'required|mimes:doc,docx,pdf|max:2048|unique:personal_infos,resume,id'
+            ]);
 
-       $personal_info->resume = $resume_name;
+            $path = base_path() . '/public/uploads/'.$personal_info->resume;
 
-       $personal_info->save();
+            if (file_exists($path)) {
+             unlink($path);
+         }
 
-       return redirect()->route('crud.index')->with('success', 'Your data updated successfully');
+         $ext = $request->file('resume')->getClientOriginalExtension();
+         $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
+         $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
+         $personal_info->resume = $resume_name;
+         
+     }else{
 
-   }
+        $personal_info->resume = $request->resume_old_name;
+    }
+    
+    
+
+    $personal_info->save();
+
+    return redirect()->route('crud.index')->with('success', 'Your data updated successfully');
+
+}
 
     /**
      * Remove the specified resource from storage.
@@ -160,19 +173,19 @@ class CrudController extends Controller
      */
     public function destroy($id)
     {
-     \Log::info("Req=CrudController@destroy Called");
-     
-     $personal_info = PersonalInfo::findOrFail($id);
+       \Log::info("Req=CrudController@destroy Called");
 
-     $path = base_path() . '/public/uploads/'.$personal_info->resume;
+       $personal_info = PersonalInfo::findOrFail($id);
 
-     if (file_exists($path)) { unlink($path); }
+       $path = base_path() . '/public/uploads/'.$personal_info->resume;
 
-     $personal_info->delete();
+       if (file_exists($path)) { unlink($path); }
 
-     return redirect()->route('crud.index')->with('success', 'Your data deleted successfully');
+       $personal_info->delete();
 
- }
+       return redirect()->route('crud.index')->with('success', 'Your data deleted successfully');
+
+   }
 
 
 }

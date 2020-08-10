@@ -23,14 +23,29 @@ class PersonalInfoRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|max:200',
-            'country' => 'required',
-            'city' => 'required_with:country', 
-            'skills' => 'required',
-            'birthday' => 'required',
-            'resume' => 'required|mimes:doc,docx,pdf|max:2048|unique:personal_infos,resume'
+       switch($this->method()) {
+        case 'POST': {
+            return [
+                'name' => 'required|max:200',
+                'country' => 'required',
+                'city' => 'required_with:country', 
+                'skills' => 'required',
+                'birthday' => 'required',
+                'resume' => 'required|mimes:doc,docx,pdf|max:2048|unique:personal_infos,resume,id',
+            ];
+        }
+        case 'PUT': {
+            return [
+               'name' => 'required|max:200',
+               'country' => 'required',
+               'city' => 'required_with:country', 
+               'skills' => 'required',
+               'birthday' => 'required',
+           ];
+       }
+       default:break;
+   }
+}
 
-        ];
-    }
+
 }
