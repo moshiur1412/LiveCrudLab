@@ -66,8 +66,10 @@ class CrudController extends Controller
         $personal_info->birthday = $request->birthday; 
         
         // File Uploaded 
-        $resume_name = $request->file('resume')->getClientOriginalName(); 
-        $request->file('resume')->move(base_path() . '/public/uploads', $resume_name);
+        // $resume_name = $request->file('resume')->getClientOriginalName();
+        $ext = $request->file('resume')->getClientOriginalExtension();
+        $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
+        $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
         $personal_info->resume = $resume_name;
 
         $personal_info->save();
@@ -135,20 +137,20 @@ class CrudController extends Controller
         $path = base_path() . '/public/uploads/'.$personal_info->resume;
 
         if (file_exists($path)) {
-         unlink($path);
-     }
-     $resume = $request->file('resume')->getClientOriginalName();
-     $resume_name = $id."_".$resume;
-     $destination = base_path() . '/public/uploads';
-     $request->file('resume')->move($destination, $resume_name);
+           unlink($path);
+       }
+       $ext = $request->file('resume')->getClientOriginalExtension();
+       $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
+       $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
+       $personal_info->resume = $resume_name;
 
-     $personal_info->resume = $resume_name;
+       $personal_info->resume = $resume_name;
 
-     $personal_info->save();
+       $personal_info->save();
 
-     return redirect()->route('crud.index')->with('success', 'Your data updated successfully');
+       return redirect()->route('crud.index')->with('success', 'Your data updated successfully');
 
- }
+   }
 
     /**
      * Remove the specified resource from storage.
@@ -158,19 +160,19 @@ class CrudController extends Controller
      */
     public function destroy($id)
     {
-       \Log::info("Req=CrudController@destroy Called");
-       
-       $personal_info = PersonalInfo::findOrFail($id);
+     \Log::info("Req=CrudController@destroy Called");
+     
+     $personal_info = PersonalInfo::findOrFail($id);
 
-       $path = base_path() . '/public/uploads/'.$personal_info->resume;
+     $path = base_path() . '/public/uploads/'.$personal_info->resume;
 
-       if (file_exists($path)) { unlink($path); }
+     if (file_exists($path)) { unlink($path); }
 
-       $personal_info->delete();
+     $personal_info->delete();
 
-       return redirect()->route('crud.index')->with('success', 'Your data deleted successfully');
+     return redirect()->route('crud.index')->with('success', 'Your data deleted successfully');
 
-   }
+ }
 
 
 }

@@ -39,7 +39,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Date of Birth:</strong>
-            {{ $personal_info->birthday }}
+            {{ date('d M Y', strtotime($personal_info->birthday)) }}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">

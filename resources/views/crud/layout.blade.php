@@ -12,6 +12,9 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
 	<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<link href="{{ asset('sweetalert/sweetalert.css') }}" rel="stylesheet">
+	<script src="{{ asset('sweetalert/sweetalert.min.js') }}" type="text/javascript"> </script>
+
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
@@ -27,7 +30,7 @@
 		<p>By: Md. Moshiur Rahman</p> 
 	</div>
 
-	<div class="container">
+	<div class="container-fluid ">
 		@yield('content')
 	</div>
 
