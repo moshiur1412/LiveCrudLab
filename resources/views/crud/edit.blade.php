@@ -1,50 +1,51 @@
-@extends('crud.layout')
+@extends('partials.master')
 
 @section('content')
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Edit Page</h2>
-        </div>
-        <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('crud.index') }}"> Back</a>
-        </div>
-    </div>
-</div>
-
-@if ($errors->any())
-<div class="alert alert-danger">
-    <strong>Warning!</strong> Please check your input code<br><br>
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-
-<form action="{{ route('crud.update', $personal_info->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-
+<div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Name:</strong>
-                <input type="text" name="name" value="{{$personal_info->name ?: '' }}" class="form-control @error('name') is-invalid @enderror" placeholder="Your Full Name">
-
-                @error('name')
-                <span class="invalid-feedback">
-                    <strong> {{ $message }}</strong>
-                </span>
-                @enderror
-
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>Edit Page</h2>
+            </div>
+            <div class="pull-right">
+                <a class="btn btn-primary" href="{{ route('crud.index') }}"> Back</a>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-               
-               <select name="country" id="countryID" class="form-control @error('country') is-invalid @enderror">
+    </div>
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Warning!</strong> Please check your input code<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    <form action="{{ route('crud.update', $personal_info->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Name:</strong>
+                    <input type="text" name="name" value="{{$personal_info->name ?: '' }}" class="form-control @error('name') is-invalid @enderror" placeholder="Your Full Name">
+
+                    @error('name')
+                    <span class="invalid-feedback">
+                        <strong> {{ $message }}</strong>
+                    </span>
+                    @enderror
+
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                 
+                 <select name="country" id="countryID" class="form-control @error('country') is-invalid @enderror">
                     <option selected disabled >Select Country * ...</option>
                     @foreach($countries as $country)
                     <option value="{{$country->name}}" data-country="{{$country->id}}" {{ $personal_info->country == $country->name ? 'selected' : null }}>{{ $country->name }}</option>
@@ -58,64 +59,64 @@
                 </span>
                 @enderror
 
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+             <select name="city"  class="form-control @error('city') is-invalid @enderror" id="cityID" data-selected-city="{{ old('city') }}">
+
+                 @foreach($cities as $city)
+                 <option value="{{$city->name}}" data-city="{{$city->id}}" {{ $personal_info->city == $city->name ? 'selected' : null }}  >{{  $city->name }}</option>
+                 @endforeach
+
+             </select>
+
+             @error('city')
+             <span class="invalid-feedback">
+                <strong> {{ $message }}</strong>
+            </span>
+            @enderror
+
         </div>
     </div>
+
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-           <select name="city"  class="form-control @error('city') is-invalid @enderror" id="cityID" data-selected-city="{{ old('city') }}">
+            <strong>Language Skills:</strong>
 
-           @foreach($cities as $city)
-             <option value="{{$city->name}}" data-city="{{$city->id}}" {{ $personal_info->city == $city->name ? 'selected' : null }}  >{{  $city->name }}</option>
-             @endforeach
+            <div class="form-control @error('skills') is-invalid @enderror">
 
-                </select>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="C#" name="skills[]" {{ array_key_exists('C#', $skills) ? 'checked' : null }}  @if(is_array(old('skills')) && in_array('C#', old('skills'))) checked @endif >
+                  <label class="form-check-label" for="inlineCheckbox2">C#</label>
+              </div>
 
-                @error('city')
-                <span class="invalid-feedback">
-                    <strong> {{ $message }}</strong>
-                </span>
-                @enderror
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="C++" name="skills[]" {{ array_key_exists('C++', $skills) ? 'checked' : null }}  @if(is_array(old('skills')) && in_array('C++', old('skills'))) checked @endif>
+                  <label class="form-check-label" for="inlineCheckbox2">C++</label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Java" name="skills[]" {{ array_key_exists('Java', $skills) ? 'checked' : null }}  @if(is_array(old('skills')) && in_array('Java', old('skills'))) checked @endif>
+                  <label class="form-check-label" for="inlineCheckbox2">Java</label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="PHP" name="skills[]" {{ array_key_exists('PHP', $skills) ? 'checked' : null }}  @if(is_array(old('skills')) && in_array('PHP', old('skills'))) checked @endif>
+                  <label class="form-check-label" for="inlineCheckbox2">PHP</label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="SQL" name="skills[]" {{ array_key_exists('SQL', $skills) ? 'checked' : null }}  @if(is_array(old('skills')) && in_array('SQL', old('skills'))) checked @endif>
+                  <label class="form-check-label" for="inlineCheckbox2">SQL</label>
+              </div>
 
-     </div>
- </div>
-
- <div class="col-xs-12 col-sm-12 col-md-12">
-    <div class="form-group">
-        <strong>Language Skills:</strong>
-
-        <div class="form-control @error('skills') is-invalid @enderror">
-
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="C#" name="skills[]" {{ array_key_exists('C#', $skills) ? 'checked' : null }}  @if(is_array(old('skills')) && in_array('C#', old('skills'))) checked @endif >
-              <label class="form-check-label" for="inlineCheckbox2">C#</label>
           </div>
 
-          <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="C++" name="skills[]" {{ array_key_exists('C++', $skills) ? 'checked' : null }}  @if(is_array(old('skills')) && in_array('C++', old('skills'))) checked @endif>
-              <label class="form-check-label" for="inlineCheckbox2">C++</label>
-          </div>
-          <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Java" name="skills[]" {{ array_key_exists('Java', $skills) ? 'checked' : null }}  @if(is_array(old('skills')) && in_array('Java', old('skills'))) checked @endif>
-              <label class="form-check-label" for="inlineCheckbox2">Java</label>
-          </div>
-          <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="PHP" name="skills[]" {{ array_key_exists('PHP', $skills) ? 'checked' : null }}  @if(is_array(old('skills')) && in_array('PHP', old('skills'))) checked @endif>
-              <label class="form-check-label" for="inlineCheckbox2">PHP</label>
-          </div>
-          <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="SQL" name="skills[]" {{ array_key_exists('SQL', $skills) ? 'checked' : null }}  @if(is_array(old('skills')) && in_array('SQL', old('skills'))) checked @endif>
-              <label class="form-check-label" for="inlineCheckbox2">SQL</label>
-          </div>
-
-      </div>
-
-        @error('skills')
+          @error('skills')
           <span class="invalid-feedback">
             <strong> {{ $message }}</strong>
         </span>
         @enderror
 
-  </div>
+    </div>
 </div>
 
 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -146,12 +147,13 @@
 
 </div>
 
-<div class="col-xs-12 col-sm-12 col-md-12 text-right">
-    <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+<div class="col-xs-12 col-sm-12 col-md-12 text-right mb-10">
+    <button type="submit" id="submit" class="btn btn-primary ">Submit</button>
 </div>
 </div>
 
 </form>
+</div>
 
 <script type="text/javascript">
     // File Size Validations -->
@@ -203,15 +205,15 @@ $(document).ready(function () {
                     });
 
                     // take subcategory value which has been selected in data attribute 
-                        var cityValue = $("#cityID").attr("data-selected-city");
-                        if(cityValue !== '')
-                        {
+                    var cityValue = $("#cityID").attr("data-selected-city");
+                    if(cityValue !== '')
+                    {
                     // assign chosen data attribute value to select
-                        $("#cityID").val(cityValue);
-                    }
-
+                    $("#cityID").val(cityValue);
                 }
-            });
+
+            }
+        });
         } else {
             $('#cityID').empty();
         }

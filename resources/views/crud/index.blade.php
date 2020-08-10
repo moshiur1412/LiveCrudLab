@@ -1,4 +1,4 @@
-@extends('crud.layout')
+@extends('partials.master')
 
 @section('content')
 <div class="row">
@@ -12,11 +12,10 @@
     </div>
 </div>
 
-@if ($message = Session::get('success'))
-<div class="alert alert-success">
-    <p>{{ $message }}</p>
-</div>
-@endif
+<!-- alerts -->
+@include('partials.alerts')
+
+
 
 <table id="example" class="table table-striped table-bordered" style="width:100%">
     <thead>

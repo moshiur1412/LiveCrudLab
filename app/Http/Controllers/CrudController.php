@@ -74,7 +74,7 @@ class CrudController extends Controller
 
         $personal_info->save();
 
-        return redirect()->route('crud.index')->with('success', 'Your information store successfully!');
+        return redirect()->route('crud.index')->with('success', ['Success!' => 'Your information store successfully!']);
     }
 
     /**
@@ -151,17 +151,17 @@ class CrudController extends Controller
          $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
          $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
          $personal_info->resume = $resume_name;
-         
+
      }else{
 
         $personal_info->resume = $request->resume_old_name;
     }
-    
-    
+
+
 
     $personal_info->save();
 
-    return redirect()->route('crud.index')->with('success', 'Your data updated successfully');
+    return redirect()->route('crud.index')->with('success', ['Success!' => 'Your data updated successfully']);
 
 }
 
@@ -183,7 +183,7 @@ class CrudController extends Controller
 
        $personal_info->delete();
 
-       return redirect()->route('crud.index')->with('success', 'Your data deleted successfully');
+       return redirect()->route('crud.index')->with('warning', ['Warning' => 'Your data deleted completely.']);
 
    }
 

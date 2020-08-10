@@ -1,6 +1,7 @@
-@extends('crud.layout')
+@extends('partials.master')
 
 @section('content')
+<div class="container">
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -149,7 +150,7 @@
 </div>
 
 </form>
-
+ </div>
 <script type="text/javascript">
 
     // File Size Validations -->
