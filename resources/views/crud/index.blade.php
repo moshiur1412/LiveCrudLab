@@ -15,9 +15,9 @@
 <!-- alerts -->
 @include('partials.alerts')
 
-<div class="row" style="padding: 15px 0px; display: block;">
-    <div class="col-lg-12 mb-3 ml-3">
-        <table id="data_table" class="table table-striped table-bordered" style="width:100%; width: -webkit-fill-available;">
+<div class="row" style="padding: 15px 0px;">
+    <div class="col-lg-12 mb-3 ml-3"> 
+        <table id="data_table" class="ui celled table" style="width:100%">
             <thead>
                 <tr>
                    <th>#</th>

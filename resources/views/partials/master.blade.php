@@ -41,10 +41,13 @@
 		.checksize{
 			display: block;
 		}
+		body {
+  table-layout: fixed;
+}
 	</style>
 </head>
 <body>
-	<div class="jumbotron text-center">
+	<div class="jumbotron jumbotron-fluid text-center">
 		<h1>Laravel 7 CRUD </h1>
 		<p>By: Md. Moshiur Rahman</p> 
 	</div>
@@ -53,7 +56,7 @@
 		@yield('content')
 	</div>
 
-	<div class="jumbotron text-center" style="margin-bottom:0">
+	<div class="jumbotron jumbotron-fluid text-center" style="margin-bottom: 0px;">
 		<p> &copy; {{ date('Y') }} Copyright. All Rights Reserved.</p>
 	</div>
 
