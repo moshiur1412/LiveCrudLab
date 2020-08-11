@@ -2,16 +2,17 @@
 
 ## Technologies and libraries
 
-- Laravel 7+, PHP 7+.
-- JavaScript & VueJS Framework.
-- 
+- Laravel 7+, PHP 7+, MySQL 5.7
+- jQuery & JavaScript
+- PgSQL for Heroku
+- DataTable, Bootstrap 4, fontawsome
 
 ## How to run the System
 
 ### Run on the development environment
 
 - Open terminal window with your dev area
-- Then run this below comments
+- Then run this below commands
 
 ```sh
 $ git clone https://github.com/vorsurm/LiveCrudLab.git
@@ -56,5 +57,7 @@ DB_PASSWORD=password
 
 ## References
 
-- http://bootstrap-ecommerce.com/
-- https://github.com/pratikborsadiya/vali-admin
+- https://getbootstrap.com/docs/4.0/getting-started/introduction/
+- https://fontawesome.com/v4.7.0/get-started/
+- https://laravel.com/docs/7.x/readme
+- https://datatables.net/manual/
