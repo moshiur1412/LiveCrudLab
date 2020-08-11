@@ -70,7 +70,8 @@ class CrudController extends Controller
         // File Upload Store-->
         $ext = $request->file('resume')->getClientOriginalExtension();
         $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
-        $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
+        // $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
+        $request->file('resume')->storeAs('public/uploads/', $resume_name);
         $personal_info->resume = $resume_name;
 
         $personal_info->save();
@@ -151,7 +152,9 @@ class CrudController extends Controller
 
            $ext = $request->file('resume')->getClientOriginalExtension();
            $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
-           $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
+           // $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
+            $request->file('resume')->storeAs('public/uploads/', $resume_name);
+
            $personal_info->resume = $resume_name;
 
        }else{
