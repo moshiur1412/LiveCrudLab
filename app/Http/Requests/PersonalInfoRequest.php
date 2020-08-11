@@ -31,7 +31,7 @@ class PersonalInfoRequest extends FormRequest
                 'city' => 'required_with:country', 
                 'skills' => 'required',
                 'birthday' => 'required|before:tomorrow',
-                'resume' => 'required|mimes:doc,docx,pdf|max:2048|unique:personal_infos,resume,id',
+                'resume' => 'required|mimes:doc,docx,pdf|max:2048',
             ];
         }
         case 'PUT': {
