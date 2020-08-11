@@ -19,7 +19,7 @@ class CrudController extends Controller
     {
         \Log::info("Req=CrudController@index called");
 
-        $personal_infos = PersonalInfo::all();
+        $personal_infos = PersonalInfo::latest()->get();
 
         return view('crud.index', compact('personal_infos'));
     }
@@ -44,7 +44,9 @@ class CrudController extends Controller
     public function cityName($id)
     {
         \Log::info("Req=CrudController@cityName Called");
+
         $cities = City::where("country_id",$id)->get();
+
         return json_encode($cities);
     }
 
@@ -144,20 +146,18 @@ class CrudController extends Controller
             $path = base_path() . '/public/uploads/'.$personal_info->resume;
 
             if (file_exists($path)) {
-             unlink($path);
-         }
+               unlink($path);
+           }
 
-         $ext = $request->file('resume')->getClientOriginalExtension();
-         $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
-         $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
-         $personal_info->resume = $resume_name;
+           $ext = $request->file('resume')->getClientOriginalExtension();
+           $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
+           $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
+           $personal_info->resume = $resume_name;
 
-     }else{
+       }else{
 
         $personal_info->resume = $request->resume_old_name;
     }
-
-
 
     $personal_info->save();
 
@@ -167,25 +167,24 @@ class CrudController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-       \Log::info("Req=CrudController@destroy Called");
+     \Log::info("Req=CrudController@destroy Called");
 
-       $personal_info = PersonalInfo::findOrFail($id);
+     $personal_info = PersonalInfo::findOrFail($id);
 
-       $path = base_path() . '/public/uploads/'.$personal_info->resume;
+     $path = base_path() . '/public/uploads/'.$personal_info->resume;
 
-       if (file_exists($path)) { unlink($path); }
+     if (file_exists($path)) { unlink($path); }
 
-       $personal_info->delete();
+     $personal_info->delete();
 
-       return redirect()->route('crud.index')->with('warning', ['Warning' => 'Your data deleted completely.']);
+     return redirect()->route('crud.index')->with('warning', ['Warning' => 'Your data deleted completely.']);
 
-   }
+ }
 
 
 }

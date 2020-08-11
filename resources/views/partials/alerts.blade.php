@@ -2,7 +2,7 @@
 @foreach(session('info') as $title => $message)
 <div class="alert alert-info alert-dismissible">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <h4><i class="icon fa fa-info"></i> {{ $title }}</h4>
+    <h4><i class="fa fa-info"></i> {{ $title }}</h4>
     {{ $message }}
 </div>
 @endforeach
@@ -12,7 +12,7 @@
 @foreach(session('success') as $title => $message)
 <div class="alert alert-success alert-dismissible">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <h4><i class="icon fa fa-check"></i> {{ $title }}</h4>
+    <h4><i class="fa fa-check"></i> {{ $title }}</h4>
     {{ $message }}
 </div>
 @endforeach
@@ -22,7 +22,7 @@
 @foreach(session('error') as $title => $message)
 <div class="alert alert-danger alert-dismissible">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <h4><i class="icon fa fa-ban"></i> {{ $title }}</h4>
+    <h4><i class="fa fa-ban"></i> {{ $title }}</h4>
     {{ $message }}
 </div>
 @endforeach
@@ -32,7 +32,7 @@
 @foreach(session('warning') as $title => $message)
 <div class="alert alert-warning alert-dismissible">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <h4><i class="icon fa fa-warning"></i> {{ $title }}</h4>
+    <h4><i class="fa fa-warning"></i> {{ $title }}</h4>
     {{ $message }}
 </div>
 @endforeach
