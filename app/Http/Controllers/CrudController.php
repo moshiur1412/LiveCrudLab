@@ -146,9 +146,7 @@ class CrudController extends Controller
 
             $path = base_path() . '/public/uploads/'.$personal_info->resume;
 
-            if (file_exists($path)) {
-               unlink($path);storage_path
-           }
+            if (file_exists($path)) { unlink($path); }
 
            $ext = $request->file('resume')->getClientOriginalExtension();
            $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
