@@ -23,7 +23,7 @@ class PersonalInfoSeeder extends Seeder
         // 	'resume' => 'demo.pdf'
         // ]);
 
-        $skills = ['Java,PHP,SQL', 'Java,PHP', 'C#,C++'];
+        $skills = ['Java, PHP, SQL', 'Java, PHP', 'C#, C++', 'C++, PHP, SQL'];
  
 
         DB::table('personal_infos')->insert([

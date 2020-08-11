@@ -64,11 +64,10 @@ class CrudController extends Controller
         $personal_info->name = $request->name;
         $personal_info->country = $request->country;
         $personal_info->city = $request->city;
-        $personal_info->skills = implode(',', $request->skills);
+        $personal_info->skills = implode(', ', $request->skills);
         $personal_info->birthday = $request->birthday; 
         
-        // File Uploaded 
-        // $resume_name = $request->file('resume')->getClientOriginalName();
+        // File Upload Store-->
         $ext = $request->file('resume')->getClientOriginalExtension();
         $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
         $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
@@ -105,7 +104,7 @@ class CrudController extends Controller
 
         $personal_info = PersonalInfo::findOrFail($id);
 
-        $skills = explode(",", $personal_info->skills);
+        $skills = explode(", ", $personal_info->skills);
         $skills = array_flip($skills);
 
         $countries = Country::all();
@@ -128,7 +127,7 @@ class CrudController extends Controller
 
         \Log::info("Req=CrudController@updated Called");
 
-        $skills = implode(',', $request->skills);
+        $skills = implode(', ', $request->skills);
         $personal_info = PersonalInfo::findOrFail($id);
         $personal_info->name = $request->name;
         $personal_info->country = $request->country;
@@ -136,6 +135,7 @@ class CrudController extends Controller
         $personal_info->skills = $skills;
         $personal_info->birthday = $request->birthday;
 
+        // File Upload Updated -->
         $file = $request->file('resume');
         if(!empty($file)){
 
