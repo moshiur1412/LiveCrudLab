@@ -19,7 +19,7 @@ class CrudController extends Controller
     {
         \Log::info("Req=CrudController@index called");
 
-        $personal_infos = PersonalInfo::latest()->get();
+        $personal_infos = PersonalInfo::OrderBy('created_at', 'desc')->get();
 
         return view('crud.index', compact('personal_infos'));
     }
