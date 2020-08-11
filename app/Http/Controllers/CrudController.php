@@ -67,20 +67,11 @@ class CrudController extends Controller
         $personal_info->skills = implode(', ', $request->skills);
         $personal_info->birthday = $request->birthday; 
         
-        
+        // File Upload Store-->
         $resume = $request->file('resume');
         $filename = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).'.'.$resume->getClientOriginalExtension();
         $resume->move(base_path() . '/public/uploads',$filename);
-
-        
-        // File Upload Store-->
-        // $ext = $request->file('resume')->getClientOriginalExtension();
-        // $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
-        // $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".pdf";
-
         $personal_info->resume = $filename;
-        // $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
-        // $request->file('resume')->storeAs('public/uploads/', $resume_name);
 
         $personal_info->save();
 
@@ -145,25 +136,23 @@ class CrudController extends Controller
         $personal_info->birthday = $request->birthday;
 
         // File Upload Updated -->
-        $file = $request->file('resume');
-        if(!empty($file)){
+        $resume = $request->file('resume');
+        if(!empty($resume)){
 
             $request->validate([
-                'resume' => 'required|mimes:doc,docx,pdf|max:2048|unique:personal_infos,resume,id'
+                'resume' => 'required|mimes:doc,docx,pdf|max:2048'
             ]);
 
             $path = base_path() . '/public/uploads/'.$personal_info->resume;
 
-            if (file_exists($path)) { unlink($path); }
+            if (file_exists($path)) {
+             unlink($path);
+         }
+         $filename = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).'.'.$resume->getClientOriginalExtension();
+         $resume->move(base_path() . '/public/uploads',$filename);
+         $personal_info->resume = $filename;
 
-           $ext = $request->file('resume')->getClientOriginalExtension();
-           $resume_name = 'Resume_'.str_replace(" ", "_", ucwords($request->name)).".".$ext;
-           $personal_info->resume = $resume_name;
-            // $request->file('resume')->storeAs('public/uploads/', $resume_name);
-           $request->file('resume')->move(base_path() . '/public/uploads',$resume_name);
-
-
-       }else{
+     }else{
 
         $personal_info->resume = $request->resume_old_name;
     }
@@ -181,19 +170,19 @@ class CrudController extends Controller
      */
     public function destroy($id)
     {
-     \Log::info("Req=CrudController@destroy Called");
+       \Log::info("Req=CrudController@destroy Called");
 
-     $personal_info = PersonalInfo::findOrFail($id);
+       $personal_info = PersonalInfo::findOrFail($id);
 
-     $path = base_path() . '/public/uploads/'.$personal_info->resume;
+       $path = base_path() . '/public/uploads/'.$personal_info->resume;
 
-     if (file_exists($path)) { unlink($path); }
+       if (file_exists($path)) { unlink($path); }
 
-     $personal_info->delete();
+       $personal_info->delete();
 
-     return redirect()->route('crud.index')->with('warning', ['Warning' => 'Your data deleted completely.']);
+       return redirect()->route('crud.index')->with('warning', ['Warning' => 'Your data deleted completely.']);
 
- }
+   }
 
 
 }
