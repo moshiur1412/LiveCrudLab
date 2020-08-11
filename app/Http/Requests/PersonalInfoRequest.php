@@ -30,7 +30,7 @@ class PersonalInfoRequest extends FormRequest
                 'country' => 'required',
                 'city' => 'required_with:country', 
                 'skills' => 'required',
-                'birthday' => 'required',
+                'birthday' => 'required|before:tomorrow',
                 'resume' => 'required|mimes:doc,docx,pdf|max:2048|unique:personal_infos,resume,id',
             ];
         }
@@ -40,7 +40,7 @@ class PersonalInfoRequest extends FormRequest
                'country' => 'required',
                'city' => 'required_with:country', 
                'skills' => 'required',
-               'birthday' => 'required',
+               'birthday' => 'required|before:tomorrow',
            ];
        }
        default:break;
