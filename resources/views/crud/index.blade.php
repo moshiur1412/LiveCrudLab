@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-12 mb-3">
         <div class="pull-left">
-            <h2 style="margin: auto;">All Informations</h2>
+            <h2 style="margin: auto;">List Page</h2>
        </div>
        <div class="pull-right">
             <a class="btn btn-success" href="{{ route('crud.create') }}"> Create (+)</a>

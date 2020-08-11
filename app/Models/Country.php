@@ -7,4 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     protected $guarded = [];
+
+    public function cities(){
+        // $country->cities
+        return $this->hasMany(City::class);
+    }
+
+
 }

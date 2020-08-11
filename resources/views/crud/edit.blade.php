@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2 style="margin: auto;">Edit Page</h2>
+            <h2 style="margin: auto;">Update Page</h2>
        </div>
        <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('crud.index') }}"> Back</a>
